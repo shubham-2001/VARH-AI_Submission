@@ -1,0 +1,3 @@
+Model               	Val PSNR  	Val Time [ms] 	Params [M]	FLOPs [G] 	Acts [M]	Mem [M] 	Conv    
+00_SPAN             	26.94     	12.11         	0.151     	9.83      	41.68   	708.58  	  22    
+15_DSCF_Fused       	26.92     	3.87          	0.126     	8.22      	38.93   	527.21  	  22    
