@@ -71,8 +71,8 @@ class SPAB(nn.Module):
         out2_act = self.act1(out2)
         out3 = (self.c3_r(out2_act))
 
-        sim_att = torch.sigmoid(out3).sub_(0.5)
-        out = out3.add(x).mul_(sim_att)
+        sim_att = torch.sigmoid(out3) - 0.5
+        out = (out3 + x) * sim_att
         return out, out1, out2, out3
 
 class SPAB_Fused(nn.Module):
@@ -98,8 +98,8 @@ class SPAB_Fused(nn.Module):
         out2_act = self.act1(out2)
         out3 = (self.c3_r(out2_act))
 
-        sim_att = torch.sigmoid(out3).sub_(0.5)
-        out = out3.add(out_feature).mul_(sim_att)
+        sim_att = torch.sigmoid(out3) - 0.5
+        out = (out3 + out_feature) * sim_att
         return out, out1_fused, out2, out3
 
 class DSCF_Fused(nn.Module):
@@ -139,7 +139,7 @@ class DSCF_Fused(nn.Module):
             self.mean = self.mean.to(device=x.device, dtype=x.dtype)
             self.mean_allocated = True
             
-        x_norm = x.sub(self.mean).mul_(self.img_range)
+        x_norm = (x - self.mean) * self.img_range
 
         out_feature = self.conv_1(x_norm)
         out1_fused = self.conv_fused(x_norm)
